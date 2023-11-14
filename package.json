@@ -1,0 +1,29 @@
+{
+  "name": "express-api-crud-blog",
+  "version": "1.0.0",
+  "description": "Routing express",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "set DEBUG=express:* & nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mentabomber/express-api-crud-blog.git"
+  },
+  "keywords": [
+    "routing",
+    "express"
+  ],
+  "author": "Simcic Tilen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mentabomber/express-api-crud-blog/issues"
+  },
+  "homepage": "https://github.com/mentabomber/express-api-crud-blog#readme",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1"
+  }
+}
