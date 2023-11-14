@@ -90,20 +90,20 @@ function store(req, res){
 }
 function destroy(req, res){
     const post = findOrFail(req, res);
+    let index = postsList.findIndex(existingPost => existingPost.slug === post.slug);
+    postsList.splice(index, 1);
+    const filePath = path.resolve(
+    __dirname,
+    "..",
+    "db",
+    "db.json"
+    );
+    fs.writeFileSync(filePath, JSON.stringify(postsList, null, 2));
     res.format({
         html: () => {
             res.redirect("/posts");
         },
         default: () => {
-            let index = postsList.findIndex(existingPost => existingPost.slug === post.slug);
-            postsList.splice(index, 1);
-            const filePath = path.resolve(
-            __dirname,
-            "..",
-            "db",
-            "db.json"
-            );
-            fs.writeFileSync(filePath, JSON.stringify(postsList, null, 2));
             res.send("Il post è stato eliminato!")  
         }
     })
