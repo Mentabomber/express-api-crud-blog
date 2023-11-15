@@ -92,13 +92,28 @@ function destroy(req, res){
     const post = findOrFail(req, res);
     let index = postsList.findIndex(existingPost => existingPost.slug === post.slug);
     postsList.splice(index, 1);
-    const filePath = path.resolve(
-    __dirname,
-    "..",
-    "db",
-    "db.json"
-    );
-    fs.writeFileSync(filePath, JSON.stringify(postsList, null, 2));
+  
+    const json = JSON.stringify(postsList, null, 2);
+    // = fs.writeFileSync(filePath, JSON.stringify(postsList, null, 2));
+    if (post.image) {
+        if (typeof post.image === "string") {
+            const filePath = path.resolve(
+                __dirname,
+                "..",
+                "public",
+                "assets",
+                "imgs",
+                "posts",
+                post.image
+                );
+
+                fs.unlinkSync(filePath);
+        } else{
+            const filePath = path.resolve(__dirname, "..", post.image.path); 
+            fs.unlinkSync(filePath);
+        }
+    };
+    fs.writeFileSync(path.resolve(__dirname, "..", "db", "db.json"), json);
     res.format({
         html: () => {
             res.redirect("/posts");
@@ -107,9 +122,8 @@ function destroy(req, res){
             res.send("Il post è stato eliminato!")  
         }
     })
-   
-
 }
+
 function download(req, res){
     const post = findOrFail(req, res);
 
